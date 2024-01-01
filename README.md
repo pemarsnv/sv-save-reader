@@ -1,2 +1,2 @@
 # sv-save-reader
-A little save reader for the game Stardew Valley 
+a little save reader for the game stardew valley🌻
