@@ -100,34 +100,56 @@ public class InsertFish {
 		}
 	}
 	
+	/**
+	 * Indicates whether the fish described is catchable 
+	 * with a fishing rod or with a trap
+	 * 
+	 * @param description the string describing the fish 
+	 * @return true if the fish described is catchable with a rod
+	 */
 	public static boolean isThisAFish(String description) {
-		System.out.println("isthisafish");
+		
 		String fish = description;
-		System.out.println(fish);
-		//+ "        \"717\": \"Crab/trap/.1/684 .45/ocean/1/20\",\r\n"
+		
+		//retrieves the 2nd section of the description which either
+		//indicates if the fish is catchable with a TRAP or an indicator
+		//of how difficult it is to catch it with the fishing rod
 		fish = fish.substring(fish.indexOf("/")+1);
 		fish = fish.substring(0, fish.indexOf("/"));
-		System.out.println(fish);
+		
+		//returns if the catching difficulty is different from "trap"
 		return !fish.equals("trap");
+		
 	}
 	
+	/**
+	 * Retrieves a fish according to a description 
+	 * @param description the string describing the fish 
+	 * @return the fish described 
+	 */
 	public static Fish getFishFromDescription(String description) {
-		System.out.println(description);
+		
 		Fish fish;
+		int id; String name;
 		
 		//fetching the fish id 
+		
+		//retrives the indexes of the beginning and end of the id section
 		int begin = description.indexOf('"')+1; int end = description.indexOf('"', begin+1);
-		int id = Integer.valueOf(description.substring(begin, end));
+		//converts the index section to an integer corresponding to the id
+		id = Integer.valueOf(description.substring(begin, end));
+		//substrings the description to remove the id section
 		description = description.substring(end+1);
-		System.out.println(id); System.out.println(description);
 		
-		//fetching the fish name
+		//fetching the fish name with the same system
+		
 		begin = description.indexOf('"')+1; end = description.indexOf("/");
-		String name = description.substring(begin, end);
+		name = description.substring(begin, end);
 		description = description.substring(end+1);
-		System.out.println(name); System.out.println(description);
 		
-		//fetching the fish start and end type 
+		//fetching the time when the fish is catchable with the same system 
+		
+		//skips all the fish type sections
 		for (int i = 0; i<4; i++) {
 			description = description.substring(description.indexOf("/")+1);
 		}
@@ -136,14 +158,11 @@ public class InsertFish {
 		int startTime = Integer.valueOf(description.substring(begin, end));
 		begin = end+1; end = description.indexOf("/");
 		int endTime = Integer.valueOf(description.substring(begin, end));
-		System.out.println(startTime+" "+endTime);
 		
-		System.out.println(description);
-		
-		//fetching all the seasons when the fish is catchable
+		//fetching all the seasons when the fish is catchable with the same system
 		begin = description.indexOf("/")+1; end = description.indexOf("/", begin);
 		String season = description.substring(begin, end);
-		System.out.println(season);
+		
 		Season[] seasons = new Season[season.length() - season.replace(" ", "").length() + 1];
 		int indice = 0;
 		while (season.contains(" ")){
@@ -151,27 +170,21 @@ public class InsertFish {
 			Season s = Season.valueOf(seasonString.toUpperCase());
 			season = season.substring(season.indexOf(" ")+1);
 			seasons[indice] = s; indice++;
-			System.out.println("AAAAA"+s);
 		}
 		seasons[indice] = Season.valueOf(season.toUpperCase());
 		
 		description = description.substring(description.indexOf('/')+1);
 		
-		System.out.println(seasons); System.out.println(description);
-		
 		//fetching all the weathers when the fish is catchable
 		begin = description.indexOf("/")+1; end = description.indexOf("/", begin);
 		String weatherString = description.substring(begin, end);
-		System.out.println(weatherString);
 		Weather weather = Weather.valueOf(weatherString.toUpperCase());
 		
 		description = description.substring(description.indexOf('/')+1);
 		
-		System.out.println(weather); System.out.println(description);
-		
 		fish = new Fish(id, name, seasons, weather, null, startTime, endTime, 0);
 		
-		System.out.println(fish);
+		System.out.println(fish+"\n");
 		return fish;
 	}
 	
