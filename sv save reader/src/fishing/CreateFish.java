@@ -17,10 +17,8 @@ public class CreateFish {
 	public static void Create() {
 		try {
 			
-			Statement stCreateSequenceFish = DBConnection.getInstance().createStatement();
-			stCreateSequenceFish.executeUpdate("CREATE SEQUENCE seqIdFish START WITH 1 INCREMENT BY 1");
-			
 			Statement stCreateFish = DBConnection.getInstance().createStatement();
+			
 			stCreateFish.executeUpdate("CREATE TABLE fish("
 					+ "idFish INTEGER PRIMARY KEY,"
 					+ "name TEXT,"
@@ -28,7 +26,9 @@ public class CreateFish {
 					+ "weather TEXT,"
 					+ "localisation TEXT,"
 					+ "startTime INTEGER,"
-					+ "endTime INTEGER"
+					+ "endTime INTEGER,"
+					+ "pauseTime INTEGER,"
+					+ "pauseLength INTEGER,"
 					+ "timesCaught INTEGER)");
 			
 		} catch (SQLException e) {
@@ -41,7 +41,6 @@ public class CreateFish {
 		try {
 			
 			Statement st = DBConnection.getInstance().createStatement();
-			st.executeUpdate("DROP SEQUENCE seqIdFish RESTRICTED");
 			st.executeUpdate("DROP TABLE fish");
 			
 		} catch (SQLException e) {
