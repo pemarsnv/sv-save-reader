@@ -27,8 +27,8 @@ public class CreateFish {
 					+ "localisation TEXT,"
 					+ "startTime INTEGER,"
 					+ "endTime INTEGER,"
-					+ "pauseTime INTEGER,"
-					+ "pauseLength INTEGER,"
+					+ "pauseStart INTEGER,"
+					+ "pauseEnd INTEGER,"
 					+ "timesCaught INTEGER)");
 			
 		} catch (SQLException e) {
